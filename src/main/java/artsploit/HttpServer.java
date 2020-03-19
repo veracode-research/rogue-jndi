@@ -6,10 +6,8 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.reflections.Reflections;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.jar.JarOutputStream;
