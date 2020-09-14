@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class Utilities {
 
@@ -39,5 +40,16 @@ public class Utilities {
             return baseDN.substring(startIndex);
         else
             return baseDN.substring(startIndex, endIndex);
+    }
+
+    /**
+     * Encode bash command with Base64 to safely use within any script
+     * @param command
+     * @return
+     */
+    public static String getBase64CommandTpl(String command) {
+        return "bash -c {echo," +
+                Base64.getEncoder().encodeToString(command.getBytes()) +
+                "}|{base64,-d}|{bash,-i}";
     }
 }

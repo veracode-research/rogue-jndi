@@ -22,6 +22,7 @@ import static artsploit.Utilities.serialize;
  * @see https://www.veracode.com/blog/research/exploiting-jndi-injections-java for details
  *
  * Requires:
+ *  Tomcat 8+ or SpringBoot 1.2.x+ in classpath
  *  - tomcat-embed-core.jar
  *  - tomcat-embed-el.jar
  *
