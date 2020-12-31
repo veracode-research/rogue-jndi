@@ -4,7 +4,7 @@
 
     <groupId>RogueJndi</groupId>
     <artifactId>RogueJndi</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 
     <packaging>jar</packaging>
 
@@ -36,6 +36,12 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>2.4.5</version>
         </dependency>
 
         <dependency>

