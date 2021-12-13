@@ -7,6 +7,7 @@ import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
 import com.unboundid.ldap.listener.InMemoryListenerConfig;
 import com.unboundid.ldap.listener.interceptor.InMemoryInterceptedSearchResult;
 import com.unboundid.ldap.listener.interceptor.InMemoryOperationInterceptor;
+import com.unboundid.ldap.sdk.ReadOnlySearchRequest;
 import org.reflections.Reflections;
 
 import javax.net.ServerSocketFactory;
@@ -71,12 +72,15 @@ class LdapServer extends InMemoryOperationInterceptor {
      */
     @Override
     public void processSearchResult(InMemoryInterceptedSearchResult result) {
-        String base = result.getRequest().getBaseDN();
+        ReadOnlySearchRequest request = result.getRequest();
+        String base = request.getBaseDN();
+        System.out.println("request: " + request);
+        System.out.println("base: " + base);
         LdapController controller = null;
         //find controller
         for(String key: routes.keySet()) {
-            //compare using wildcard at the end
-            if(key.equals(base) || key.endsWith("*") && base.startsWith(key.substring(0, key.length()-1))) {
+            // compare using contains
+            if(base.contains(key)) {
                 controller = routes.get(key);
                 break;
             }
