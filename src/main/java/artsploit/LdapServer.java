@@ -85,6 +85,10 @@ class LdapServer extends InMemoryOperationInterceptor {
                 break;
             }
         }
+        if (controller == null) {
+            System.out.println("No controller for base '" + base + "', falling back to default.");
+            controller = routes.get("");
+        }
         try {
             controller.sendResult(result, base);
         } catch (Exception e1) {
