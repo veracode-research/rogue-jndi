@@ -8,6 +8,9 @@ import com.unboundid.ldap.listener.InMemoryListenerConfig;
 import com.unboundid.ldap.listener.interceptor.InMemoryInterceptedSearchResult;
 import com.unboundid.ldap.listener.interceptor.InMemoryOperationInterceptor;
 import com.unboundid.ldap.sdk.ReadOnlySearchRequest;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.Socket;
 import org.reflections.Reflections;
 
 import javax.net.ServerSocketFactory;
@@ -73,8 +76,8 @@ class LdapServer extends InMemoryOperationInterceptor {
     @Override
     public void processSearchResult(InMemoryInterceptedSearchResult result) {
         ReadOnlySearchRequest request = result.getRequest();
+        System.out.println("request: from: " + getRemoteAddress(result) + " " + request);
         String base = request.getBaseDN();
-        System.out.println("request: " + request);
         System.out.println("base: " + base);
         LdapController controller = null;
         //find controller
@@ -93,6 +96,33 @@ class LdapServer extends InMemoryOperationInterceptor {
             controller.sendResult(result, base);
         } catch (Exception e1) {
             e1.printStackTrace();
+        }
+    }
+
+    private static Method getClientConnectionMethod;
+    private static Method getSocketMethod;
+
+    static {
+        Class<?> interceptedOperationClazz = null;
+        try {
+            interceptedOperationClazz = Class.forName("com.unboundid.ldap.listener.interceptor.InterceptedOperation");
+            getClientConnectionMethod = interceptedOperationClazz.getDeclaredMethod("getClientConnection");
+            getClientConnectionMethod.setAccessible(true);
+            getSocketMethod = getClientConnectionMethod.getReturnType().getDeclaredMethod("getSocket");
+            getSocketMethod.setAccessible(true);
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            e.printStackTrace();
+            getClientConnectionMethod = null;
+        }
+    }
+
+    private String getRemoteAddress(InMemoryInterceptedSearchResult result) {
+        try {
+            Socket clientConnection = (Socket) getSocketMethod.invoke(getClientConnectionMethod.invoke(result));
+            return clientConnection.getRemoteSocketAddress().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
