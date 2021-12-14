@@ -83,7 +83,7 @@ class LdapServer extends InMemoryOperationInterceptor {
         //find controller
         for(String key: routes.keySet()) {
             // compare using contains
-            if(base.contains(key)) {
+            if (base.contains(key) && key.length() > 0 || key.equals(base)) {
                 controller = routes.get(key);
                 break;
             }
