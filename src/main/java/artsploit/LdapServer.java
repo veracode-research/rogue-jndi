@@ -99,6 +99,21 @@ class LdapServer extends InMemoryOperationInterceptor {
         }
     }
 
+    // uses reflection to get the remote address of the client
+    // since the required method isn't available on the public API
+    private String getRemoteAddress(InMemoryInterceptedSearchResult result) {
+        if (getSocketMethod == null || getClientConnectionMethod == null) {
+            return null;
+        }
+        try {
+            Socket clientConnection = (Socket) getSocketMethod.invoke(getClientConnectionMethod.invoke(result));
+            return clientConnection.getRemoteSocketAddress().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private static Method getClientConnectionMethod;
     private static Method getSocketMethod;
 
@@ -112,17 +127,6 @@ class LdapServer extends InMemoryOperationInterceptor {
             getSocketMethod.setAccessible(true);
         } catch (ClassNotFoundException | NoSuchMethodException e) {
             e.printStackTrace();
-            getClientConnectionMethod = null;
-        }
-    }
-
-    private String getRemoteAddress(InMemoryInterceptedSearchResult result) {
-        try {
-            Socket clientConnection = (Socket) getSocketMethod.invoke(getClientConnectionMethod.invoke(result));
-            return clientConnection.getRemoteSocketAddress().toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }
