@@ -19,6 +19,10 @@ In addition to the known JNDI attack methods(via remote classloading in referenc
 * [Groovy.java](/src/main/java/artsploit/controllers/Groovy.java) - leads to RCE via unsafe reflection in **org.apache.naming.factory.BeanFactory** + **groovy.lang.GroovyShell**
 * [WebSphere1.java](/src/main/java/artsploit/controllers/WebSphere1.java) - leads to OOB XXE in **com.ibm.ws.webservices.engine.client.ServiceFactory**
 * [WebSphere2.java](/src/main/java/artsploit/controllers/WebSphere2.java) - leads to RCE via classpath manipulation in **com.ibm.ws.client.applicationclient.ClientJ2CCFFactory**
+* [Dbcp2H2.java](src/main/java/artsploit/controllers/Dbcp2H2.java) - leads to RCE by abusing JDBC connection string to an H2 DB via **org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory**
+* [Dbcp2Postgresql.java](src/main/java/artsploit/controllers/Dbcp2Postgresql.java) - leads to RCE by abusing JDBC connection string to PostgreSQL DB via **org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory**
+* [DruidH2.java](src/main/java/artsploit/controllers/DruidH2.java) - leads to RCE by abusing JDBC connection string to H2 DB via **com.alibaba.druid.pool.DruidDataSourceFactory**
+* [HikariCPH2.java](src/main/java/artsploit/controllers/HikariCPH2.java) - leads to RCE by abusing JDBC connection string to H2 DB via **com.zaxxer.hikari.HikariJNDIFactory**
 
 ### Usage
 ```
@@ -62,6 +66,10 @@ Mapping ldap://192.168.1.10:1389/o=websphere1 to artsploit.controllers.WebSphere
 Mapping ldap://192.168.1.10:1389/o=websphere1,wsdl=* to artsploit.controllers.WebSphere1
 Mapping ldap://192.168.1.10:1389/o=websphere2 to artsploit.controllers.WebSphere2
 Mapping ldap://192.168.1.10:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
+Mapping ldap://192.168.1.10:1389/o=dbcp2-h2 to artsploit.controllers.Dbcp2H2
+Mapping ldap://192.168.1.10:1389/o=druid-h2 to artsploit.controllers.DruidH2
+Mapping ldap://192.168.1.10:1389/o=dbcp2-postgresql to artsploit.controllers.Dbcp2Postgresql
+Mapping ldap://192.168.1.10:1389/o=hikaricp-h2 to artsploit.controllers.HikariCPH2
 ```
 
 ### Building
